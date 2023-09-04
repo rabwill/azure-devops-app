@@ -1,8 +1,5 @@
-// index.js is used to setup and configure your bot
-
 // Import required packages
 const restify = require("restify");
-const azdev = require('azure-devops-node-api');
 // Import required bot services.
 // See https://aka.ms/bot-services to learn more about the different parts of a bot.
 const {
@@ -12,7 +9,7 @@ const {
 } = require("botbuilder");
 const { TeamsBot } = require("./teamsBot");
 const config = require("./config");
-
+const { initialiseAzDevOpsService } =require("./azservice");
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
@@ -20,11 +17,8 @@ const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
   MicrosoftAppPassword: config.botPassword,
   MicrosoftAppType: "MultiTenant",
 });
-let orgUrl = "https://dev.azure.com/rwilliams108";
-let token = "";
 
-let authHandler = azdev.getPersonalAccessTokenHandler(token); 
-let azconnection = new azdev.WebApi(orgUrl, authHandler);    
+
 
 const botFrameworkAuthentication = new ConfigurationBotFrameworkAuthentication(
   {},
@@ -44,21 +38,23 @@ adapter.onTurnError = async (context, error) => {
   await context.sendActivity(`The bot encountered an unhandled error:\n ${error.message}`);
   await context.sendActivity("To continue to run this bot, please fix the bot source code.");
 };
-
 // Create the bot that will handle incoming messages.
 const bot = new TeamsBot();
 
 // Create HTTP server.
 const server = restify.createServer();
 server.use(restify.plugins.bodyParser());
+
 server.listen(process.env.port || process.env.PORT || 3978, function () {
   console.log(`\nBot started, ${server.name} listening to ${server.url}`);
 });
-//create an async api to get product includes the parameter from products array checking lowercase
+// api for the message extesnion search
 server.get("/api/workitems/:name", async (req, res) => {
   const name = req.params.name.toLowerCase();
-  const projectName = "Microsoft 365 advocacy";
+  const projectName = config.projectName;
   try {
+    // Get the Azure DevOps connection
+    const azconnection = await initialiseAzDevOpsService();
     // Get the Work Item Tracking (WIT) API
     const witApi = await azconnection.getWorkItemTrackingApi();
     let workitems;
@@ -68,20 +64,17 @@ server.get("/api/workitems/:name", async (req, res) => {
     });
     const ids = [];
     // Display the search results
-    if (result && result.workItems) {
-      
+    if (result && result.workItems) {      
       for (const workItem of result.workItems) {    
         ids.push(workItem.id);
       }       
       workitems= await witApi.getWorkItems(ids);  
       const data = workitems.filter((obj) => obj.fields["System.Title"].toLowerCase().includes(name));
-      res.send(data);
-     
+      res.send(data);     
     }
   } catch (err) {
     console.error("Error:", err);
-  }
- 
+  } 
 });
 
 // Listen for incoming requests.
@@ -97,3 +90,8 @@ server.post("/api/messages", async (req, res) => {
     server.close();
   });
 });
+
+
+
+
+
