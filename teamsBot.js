@@ -73,6 +73,7 @@ class TeamsBot extends TeamsActivityHandler {
       },
     };
   }
+  //dialog
   async handleTeamsTaskModuleFetch(context, taskModuleRequest) {
     const obj = taskModuleRequest.data.data;
     var taskInfo = {};
@@ -130,6 +131,7 @@ class TeamsBot extends TeamsActivityHandler {
       attachments: [resultCard],
     });
   }
+  //action based ME
   async handleTeamsMessagingExtensionFetchTask(context, action) {
     switch (action.commandId) {
       case "createWorkItem": {
