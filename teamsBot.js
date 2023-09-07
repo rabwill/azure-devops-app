@@ -207,15 +207,17 @@ class TeamsBot extends TeamsActivityHandler {
     }
 }
   
-  // Link unfurl Code
+  //Link unfurl Code
   //https://dev.azure.com/rwilliams108/Microsoft%20365%20advocacy/_workitems/edit/8
+
   async handleTeamsAppBasedLinkQuery(context, query) {
     const workItemNumber = extractWorkItemNumber(query.url);
     let attachment = {};
     if (workItemNumber) {  
       //task card    
-      const obj = await getWorkItemDetails(workItemNumber);
-      const templateJson = require('./cards/taskCard.js')
+      const data = await getWorkItemDetails(workItemNumber);
+      const obj={editedTitle:data.fields["System.Title"], editedState:data.fields["System.State"], projectName:config.projectName, url:`${config.wiUrl}/edit/${data.id}/`};
+      const templateJson = require('./cards/viewCard.js')
       const template = new ACData.Template(templateJson);
       const card = template.expand({
         $root: obj

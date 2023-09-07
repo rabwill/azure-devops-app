@@ -40,7 +40,9 @@
                   "type": "link",
                   "value": {
                     "domains": [
-                      "*dev.azure.com*"
+                      "*.dev.azure.com",
+                      "*.rabdevOps.com",
+                      "*.botframework.com"
                     ]
                   }
                 }
