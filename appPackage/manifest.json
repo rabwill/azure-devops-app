@@ -1,9 +1,9 @@
 {
-    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.14/MicrosoftTeams.schema.json",
-    "manifestVersion": "1.14",
+    "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+    "manifestVersion": "1.16",
     "version": "1.0.1",
     "id": "${{TEAMS_APP_ID}}",
-    "packageName": "com.microsoft.teams.extension",
+    "packageName": "com.microsoft.teams.extension.azdevops",
     "developer": {
         "name": "Rabia Williams",
         "websiteUrl": "https://www.example.com",
@@ -15,12 +15,12 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "DevOps-Helper${{TEAMSFX_ENV}}",
-        "full": "DevOps Helper"
+        "short": "Az DevOps Help ${{TEAMSFX_ENV}}",
+        "full": "Azure DevOps workflow helper"
     },
     "description": {
-        "short": "short description of DevOps Workflow Accelerator",
-        "full": "full description of DevOps Workflow Accelerator"
+        "short": "Message extension to manage work items",
+        "full": "Message extension to manage Azure DevOps work items. This app allows you to find, edit, add work items into Azure DevOps"
     },
     "accentColor": "#FFFFFF",
     "bots": [
@@ -54,14 +54,14 @@
                         "compose",
                         "commandBox"
                     ],
-                    "description": "Search workitems",
+                    "description": "Search workitems in Azure DevOps",
                     "title": "Search",
                     "type": "query",
                     "parameters": [
                         {
                             "name": "searchQuery",
                             "title": "Search Query",
-                            "description": "Search workitems",
+                            "description": "Search workitems in Azure DevOps",
                             "inputType": "text"
                         }
                     ]
@@ -73,8 +73,8 @@
                         "message",
                         "commandBox"
                     ],
-                    "description": "Create work item",
-                    "title": "Create work item",
+                    "description": "Create work item in Azure DevOps",
+                    "title": "Create work item in Azure DevOps",
                     "type": "action",
                     "fetchTask": true
                 }
