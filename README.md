@@ -1,8 +1,12 @@
-# Search based message extension across Microsoft 365
+# Azure DevOps Search based message extension across Microsoft 365
 
-Search-based [message extensions](https://docs.microsoft.com/microsoftteams/platform/messaging-extensions/what-are-messaging-extensions?tabs=nodejs) allow users to search an external system and share results through the compose message area of the Microsoft Teams client. You can now build and run your search-based message extensions in Teams, Outlook for Windows desktop and web experiences.
+![azure devops app demo](./assets/demo-azure-app.gif)
 
-![Search app demo](https://user-images.githubusercontent.com/11220663/167868361-40ffaaa3-0300-4313-ae22-0f0bab49c329.png)
+## Features
+- Create new work item
+- Search and insert work item card with actionable buttons
+- Edit existing work item to update title and status
+- link unfurl for work items into card with actionable buttons
 
 ## Prerequisites
 
@@ -11,50 +15,25 @@ Search-based [message extensions](https://docs.microsoft.com/microsoftteams/plat
 - [Set up your dev environment for extending Teams apps across Microsoft 365](https://aka.ms/teamsfx-m365-apps-prerequisites)
 > Please note that after you enrolled your developer tenant in Office 365 Target Release, it may take couple days for the enrollment to take effect.
 - [Teams Toolkit Visual Studio Code Extension](https://aka.ms/teams-toolkit) version 5.0.0 and higher or [TeamsFx CLI](https://aka.ms/teamsfx-cli)
+- [Azure Devops Organization access](https://learn.microsoft.com/en-us/azure/devops/organizations/accounts/organization-management?view=azure-devops)
 
 ## Getting Started
 
 Follow below instructions to get started with this application template for local debugging.
 
 ### Test your application with Visual Studio Code
+1. Update `env/.env.local` file with below configurations.
+
+```
+AZURE_PERSONAL_ACCESS_TOKEN=<AZURE_PERSONAL_ACCESS_TOKEN>
+PREVIEW_IMAGE=https://github.com/rabwill/assets/blob/main/task.jpeg
+WORK_ITEM_URL=https://dev.azure.com/<orgname>/<projectname>/_workitems
+ORG_NAME=<orgname>
+PROJECT_NAME=<projectname>
+```
 
 1. Press `F5` or use the `Run and Debug Activity Panel` in Visual Studio Code.
-1. Select a target Microsoft application where the message extension runs: `Debug in Teams`, `Debug in Outlook` and click the `Run and Debug` green arrow button.
 
-### Test your application with TeamsFx CLI
-1. Install [ngrok](https://ngrok.com/download) and start your local tunnel service by running the command `ngrok http 3978`.
-1. In the `env/.env.local` file, fill in the values for `BOT_DOMAIN` and `BOT_ENDPOINT` with your ngrok URL.
-   ```
-   BOT_DOMAIN=sample-id.ngrok.io
-   BOT_ENDPOINT=https://sample-id.ngrok.io
-   ```
-1. Executing the command `teamsfx provision --env local` in your project directory.
-1. Executing the command `teamsfx deploy --env local` in your project directory.
-1. Executing the command `teamsfx preview --env local --m365-host <m365-host>` in your project directory, where options for `m365-host` are `teams` or `outlook`.
-
-## Use this message extension app
-
-This template provides a simple functionality to search for `npm` packages and render the result in [Adaptive Card](https://docs.microsoft.com/microsoftteams/platform/task-modules-and-cards/cards/design-effective-cards?tabs=design).
-
-### Use this app in Teams
-
-- `@mention` Your message extension from the `search box area`.
-
-    ![AtBotFromSearch](https://user-images.githubusercontent.com/11220663/167869365-3828ef85-64f7-43bf-9f75-99d882370154.png)
-
-- `@mention` your message extension from the `compose message area`.
-
-    ![AtBotFromMessage](https://user-images.githubusercontent.com/11220663/167869475-528736fa-d0f1-4bf8-9c23-fdffae984802.png)
-
-- Click the `...` under compose message area, find your message extension.
-
-    ![ComposeArea](https://user-images.githubusercontent.com/11220663/167869578-ce33b2ef-f5f2-4be7-a7a0-57e53b6f7c36.png)
-
-### Use this app in Outlook
-
-- Click the "More apps" icon under compose email area, find your message extension.
-  
-    ![InOutlook](https://user-images.githubusercontent.com/11220663/167869656-20225f14-f982-4e47-8dd0-050285d56853.png)
 
 ## References
 
