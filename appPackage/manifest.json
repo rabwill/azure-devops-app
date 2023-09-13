@@ -15,12 +15,12 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "Az DevOps Help ${{TEAMSFX_ENV}}",
-        "full": "Azure DevOps workflow helper"
+        "short": "AzDevOps Helper",
+        "full": "AzDevOps Helper"
     },
     "description": {
-        "short": "Message extension to manage work items",
-        "full": "Message extension to manage Azure DevOps work items. This app allows you to find, edit, add work items into Azure DevOps"
+        "short": "Find and manage AzDevOps work items",
+        "full": "Manage and find AzDevOps work items"
     },
     "accentColor": "#FFFFFF",
     "bots": [
@@ -54,14 +54,14 @@
                         "compose",
                         "commandBox"
                     ],
-                    "description": "Search workitems in Azure DevOps",
+                    "description": "Search work items in AzDevOps",
                     "title": "Search",
                     "type": "query",
                     "parameters": [
                         {
                             "name": "searchQuery",
                             "title": "Search Query",
-                            "description": "Search workitems in Azure DevOps",
+                            "description": "Search work items in AzDevOps",
                             "inputType": "text"
                         }
                     ]
@@ -73,8 +73,8 @@
                         "message",
                         "commandBox"
                     ],
-                    "description": "Create work item in Azure DevOps",
-                    "title": "Create work item in Azure DevOps",
+                    "description": "Create work item in AzDevOps",
+                    "title": "Create work item in AzDevOps",
                     "type": "action",
                     "fetchTask": true
                 }

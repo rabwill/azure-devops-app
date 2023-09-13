@@ -74,6 +74,7 @@ server.get("/api/workitems/:name", async (req, res) => {
     }
   } catch (err) {
     console.error("Error:", err);
+    res.send(500, 'Internal Server Error'+err); // Send an error response
   } 
 });
 

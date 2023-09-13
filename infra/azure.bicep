@@ -2,7 +2,12 @@
 @minLength(4)
 @description('Used to generate names for all resources in this file')
 param resourceBaseName string
-
+param azpat string
+param previewimage string
+param wiUrl string
+param orgName string
+param projectName string
+param host string
 @description('Required when create Azure Bot service')
 param botAadAppClientId string
 
@@ -59,6 +64,30 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
         {
           name: 'BOT_PASSWORD'
           value: botAadAppClientSecret
+        }
+        {
+          name: 'AZURE_PERSONAL_ACCESS_TOKEN'
+          value: azpat
+        }
+        {
+          name: 'PREVIEW_IMAGE'
+          value: previewimage
+        }
+        {
+          name: 'WORK_ITEM_URL'
+          value: wiUrl
+        }
+        {
+          name: 'ORG_NAME'
+          value: orgName
+        }
+        {
+          name: 'PROJECT_NAME'
+          value: projectName
+        }
+          {
+          name: 'BOT_DOMAIN'
+          value: host
         }
       ]
       ftpsState: 'FtpsOnly'

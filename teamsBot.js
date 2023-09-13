@@ -11,9 +11,9 @@ class TeamsBot extends TeamsActivityHandler {
   // Message extension Code
   // Search.
   async handleTeamsMessagingExtensionQuery(context, query) {
-    const searchQuery = query.parameters[0].value;
+    const searchQuery = query.parameters[0].value;   
     const response = await axios.get(
-      `http://localhost:3978/api/workitems/${searchQuery}`
+      `https://${config.host}/api/workitems/${searchQuery}`
     );
     const attachments = [];
     response.data.forEach((obj) => {
