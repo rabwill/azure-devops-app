@@ -109,7 +109,8 @@ const TaskCard= {
     {
       type: 'Action.Submit',
       title: "✍🏼 Edit",
-      data: { msteams: { type: 'task/fetch' }, data: {projectName:"${projectName}",url:"${url}",id:"${id}",title:"${title}",status:"${status}"} }
+      data: { msteams: { type: 'task/fetch' }, verb: "taskFetch", data: {projectName:"${projectName}",url:"${url}",id:"${id}",title:"${title}",status:"${status}"} 
+    }
     }
   ]
 };

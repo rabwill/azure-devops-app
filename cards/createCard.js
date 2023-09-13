@@ -51,6 +51,7 @@ const CreateCard= {
         style: "positive",
         title: "➕ Create",
         data: {
+          verb:"createWorkItem",
           title: "${title.value}",
           status: "${status.value}"    
         },

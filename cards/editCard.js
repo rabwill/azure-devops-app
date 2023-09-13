@@ -51,6 +51,7 @@ const EditCard= {
         style: "positive",
         title: "💾 Save changes",
         data: {
+          verb:"taskSubmit",
           msteams: { type: "task/edit" },
           // Include the edited values in the data
           editedTitle: "${editedTitle.value}",
