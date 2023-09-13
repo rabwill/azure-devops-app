@@ -5,7 +5,8 @@ const config = {
   previewimage:process.env.PREVIEW_IMAGE,
   wiUrl:process.env.WORK_ITEM_URL,
   orgName:process.env.ORG_NAME,
-  projectName:process.env.PROJECT_NAME
+  projectName:process.env.PROJECT_NAME,
+  host:process.env.BOT_DOMAIN
 };
 
 module.exports = config;

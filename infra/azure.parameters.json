@@ -16,6 +16,25 @@
     },
     "botDisplayName": {
       "value": "DevOps Workflow Accelerator"
+    },
+    "azpat": {
+      "value": "${{AZURE_PERSONAL_ACCESS_TOKEN}}"
+    },
+    "previewimage": {
+      "value": "${{PREVIEW_IMAGE}}"
+    },
+    "wiUrl": {
+      "value": "${{WORK_ITEM_URL}}"
+    },
+    "orgName": {
+      "value": "${{ORG_NAME}}"
+    },
+    "projectName": {
+      "value": "${{PROJECT_NAME}}"
+    },
+    "host": {
+      "value": "${{BOT_DOMAIN}}"
     }
+
   }
 }

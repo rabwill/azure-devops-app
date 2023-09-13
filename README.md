@@ -21,6 +21,11 @@
 
 Follow below instructions to get started with this application template for local debugging.
 
+### Create an env file 
+
+1.  Create an env folder 
+2. Add .env.local under the env folder in the root
+
 ### Test your application with Visual Studio Code
 1. Update `env/.env.local` file with below configurations.
 
