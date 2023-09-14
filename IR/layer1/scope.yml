@@ -1,18 +1,5 @@
 files:
-- "main":
-  path: "lib/main.dart"
-  language: "dart"
-  description: "This is the entry point of the application. It renders the page title and renders the ListScreen (defined in another file) as the main widget."
-- "screen":
-  path: "lib/screen.dart"
-  language: "dart"
-  description: "This file is responsible making a graphQL query and makes a call to the endpoint. It maps the response to a list of objects using a model class Champion (defined in another file). It renders the basic ListView but passes the model to ChampionRowview (defined in another file) to render each row. It renders a footer widget at the bottom of the page."
-- "view":
-  path: "lib/view.dart"
-  language: "dart"
-  description: "This file defines the ChampionRowview StatelessWidget. It renders a single row for the ListScreen (defined in another file). Based on the Champion model (defined in another file), it renders the Title, Body, Image, and Shortcuts"
-- "model":
-  path: "lib/model.dart"
-  language: "dart"
-  description: "This file defines the data binding from JSON from GraqphQL API endpoint to a Dart object. It defines the Champion model class."
-
+  - "azservice":
+    path: "azservice.js"
+    language: "js"
+    description: "This is a collection of helper functions to connect to Azure Services via rest APIs"
