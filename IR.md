@@ -1,6 +1,6 @@
 # Teams App
 
-# Cards - Layer 0
+## Cards - Layer 0
 
 The app provides search results from API and renders them as a list. On click it provides a detailed view. It supports edit and creation of tasks.
 
@@ -31,7 +31,7 @@ Detail View or Task Card:
         * View Item
         * Edit
 
-# API - Layer 1
+## API - Layer 1
 
 Azure DevOps Integration with the following functionality
 
