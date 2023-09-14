@@ -1,0 +1,4 @@
+introspection:
+  - "Has the search functionality changed? Do we need to render a different UI for search?"
+  - "Does the create functionality need to change? Are new fields added to the create form? Are new actions added to the create form?"
+  - "Does the edit functionality need to change? Are new fields added to the edit form? Are new actions added to the edit form?"

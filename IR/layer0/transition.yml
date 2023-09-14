@@ -1,0 +1,5 @@
+up:
+  - "Did the Search API change? Do we need to create endpoints for new search criteria?"
+  - "Did the model change? Did we add new fields or remove existing fields?"
+down:
+  - "not applicable"
