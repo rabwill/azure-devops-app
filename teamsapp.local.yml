@@ -92,3 +92,4 @@ deploy:
         WORK_ITEM_URL: ${{WORK_ITEM_URL}}
         ORG_NAME: ${{ORG_NAME}}
         PROJECT_NAME: ${{PROJECT_NAME}}
+        BOT_DOMAIN: ${{BOT_DOMAIN}}
