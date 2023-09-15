@@ -35,7 +35,7 @@ Detail View or Task Card:
 
 Azure DevOps Integration with the following functionality
 
-1. Read
+1. Read 
 2. Create
 3. Edit
 

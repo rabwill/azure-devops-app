@@ -2,7 +2,7 @@ const axios = require("axios");
 const { TeamsActivityHandler, CardFactory, MessageFactory } = require("botbuilder");
 const ACData = require("adaptivecards-templating");
 const config = require("./config");
-const { updateWorkitem,getWorkItemDetails, createWorkItem } = require("./azservice");
+const { updateWorkitem,getWorkItemDetails, createWorkItem,getWorkItem } = require("./azservice");
 
 class TeamsBot extends TeamsActivityHandler {
   constructor() {
@@ -36,7 +36,7 @@ class TeamsBot extends TeamsActivityHandler {
       preview.content.tap = {
         type: "invoke",
         value: {
-          status: obj.fields["System.State"], id: obj.id, url: `${config.wiUrl}/edit/${obj.id}/`, title: obj.fields["System.Title"], projectName: obj.fields["System.TeamProject"]
+          status: obj.fields["System.State"], id: obj.id, url: `${config.wiUrl}/edit/${obj.id}/`, title: obj.fields["System.Title"], projectName: config.projectName
         },
       };
       const data = { title: obj.fields["System.Title"], displayName: displayName, status: obj.fields["System.State"] }
