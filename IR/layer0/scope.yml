@@ -19,3 +19,7 @@ files:
     path: "viewCard.js"
     language: "js"
     description: "This is a View Card. It renders a form and buttons for actions like submit."
+  - "service":
+    path: "azservice.js"
+    language: "js"
+    description: "This is the azservice.js file. It contains the code for the service layer."
