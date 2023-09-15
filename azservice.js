@@ -9,7 +9,7 @@ async function initialiseAzDevOpsService() {
     return azconnection;
 }
 //get workitem
-async function getWorkItem(projectName) {
+async function getWorkItem(name) {
     try {
         // Get the Azure DevOps connection
         const azconnection = await initialiseAzDevOpsService();
@@ -28,7 +28,7 @@ async function getWorkItem(projectName) {
           }    
           const fields= ["id","System.Title","System.State","System.AssignedTo"];   
           workitems= await witApi.getWorkItems(ids,fields);  
-          const data = workitems.filter((obj) => obj.fields["System.Title"].toLowerCase().includes(projectName));
+          const data = workitems.filter((obj) => obj.fields["System.Title"].toLowerCase().includes(name));
           return data;   
         }
       } catch (err) {
