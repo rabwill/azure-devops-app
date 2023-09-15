@@ -4,7 +4,7 @@
 
 The app provides search results from API and renders them as a list. On click it provides a detailed view. It supports edit and creation of tasks.
 
-Search Results:
+Search Results Preview Card:
     * Row View is built with 3 Fields - Icon, Title, Subtitle
         * Icon = 📋
         * Title = $title
