@@ -1,5 +1,5 @@
 files:
-  - "teamsBot":
-    path: "teamsBot.js"
+  - "azservice":
+    path: "azservice.js"
     language: "js"
-    description: "Has handlers to handle bot commands and bot events using Azure bot framework."
+    description: "This is a collection of helper functions to connect to Azure Services via rest APIs"

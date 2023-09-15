@@ -1,5 +1,6 @@
 up:
-  - "Did the API change? Did we add new queries or mutations? Did the fields or types change?"
-  - "Did the model change? Did we add new fields or remove existing fields?"
+  - "Has the structure of the cards changed? Has data source updated to reflect the changes?"
+  - "Do we need to update the data source calls to reflect these card changes"
 down:
-  - "Did the card change? if so has the changes been reflected in the bot code that binds data with the card template?"
+  - "Did a new shortcut get added or removed from the Row View? Generate a Figma component with name Row View - Shortcut <number> data source: <source> icon: <icon> action: <action>"
+  - "Did the footer change? If so, what is the new footer text, style?"

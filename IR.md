@@ -31,7 +31,14 @@ Detail View or Task Card:
         * View Item
         * Edit
 
-## API - Layer 1
+## BOT - Layer 1
+
+Bot handler code using Azure Bot framework
+
+1. takes a user's query, retrieves work items based on that query, formats them as message attachments with interactive elements, and returns them for display in a Microsoft Teams chat
+1. opens a dialog to create a new work item and send as card in the conversation
+
+## API - Layer 2
 
 Azure DevOps Integration with the following functionality
 
@@ -39,12 +46,7 @@ Azure DevOps Integration with the following functionality
 2. Create work item with title and status
 3. Edit work item title and status
 
-## BOT - Layer 2
 
-Bot handler code using Azure Bot framework
-
-1. takes a user's query, retrieves work items based on that query, formats them as message attachments with interactive elements, and returns them for display in a Microsoft Teams chat
-1. opens a dialog to create a new work item and send as card in the conversation
  
 
 

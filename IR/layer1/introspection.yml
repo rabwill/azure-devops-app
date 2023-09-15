@@ -1,3 +1,3 @@
 introspection:
-  - "Does the Search API query need to be updated? New fields required? Or existing fields removed?"
-  - "Do we need to change query of Azure DevOps? New fields required? Or existing fields removed?"
+  - "Did the structure of the cards change? Has the bot handlers been updated to reflect the changes?"
+
