@@ -1,0 +1,5 @@
+files:
+  - "teamsBot":
+    path: "teamsBot.js"
+    language: "js"
+    description: "Has handlers to handle bot commands and bot events using Azure bot framework."

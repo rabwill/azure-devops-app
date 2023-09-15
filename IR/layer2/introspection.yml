@@ -1,0 +1,3 @@
+introspection:
+  - "Did data source and cards change? Has the bot handlers been updated to reflect the changes?"
+  - "Do we need to change query of Azure DevOps? New fields required? Or existing fields removed?"

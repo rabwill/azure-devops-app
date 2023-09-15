@@ -1,0 +1,5 @@
+up:
+  - "Not applicable"
+down:
+  - "Did a new shortcut get added or removed from the Row View? Generate a Figma component with name Row View - Shortcut <number> data source: <source> icon: <icon> action: <action>"
+  - "Did the footer change? If so, what is the new footer text, style?"
