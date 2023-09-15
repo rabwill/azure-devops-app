@@ -9,7 +9,7 @@ const {
 } = require("botbuilder");
 const { TeamsBot } = require("./teamsBot");
 const config = require("./config");
-const { initialiseAzDevOpsService } =require("./azservice");
+
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
@@ -47,35 +47,6 @@ server.use(restify.plugins.bodyParser());
 
 server.listen(process.env.port || process.env.PORT || 3978, function () {
   console.log(`\nBot started, ${server.name} listening to ${server.url}`);
-});
-// api for the message extesnion search
-server.get("/api/workitems/:name", async (req, res) => {
-  const name = req.params.name.toLowerCase();
-  const projectName = config.projectName;
-  try {
-    // Get the Azure DevOps connection
-    const azconnection = await initialiseAzDevOpsService();
-    // Get the Work Item Tracking (WIT) API
-    const witApi = await azconnection.getWorkItemTrackingApi();
-    let workitems;
-    // Execute the WIQL query to search for work items
-    const result = await witApi.queryByWiql({
-      query: `SELECT [System.Id] FROM WorkItems WHERE [System.TeamProject] = "${projectName}"`
-    });
-    const ids = [];
-    // Display the search results
-    if (result && result.workItems) {      
-      for (const workItem of result.workItems) {    
-        ids.push(workItem.id);
-      }       
-      workitems= await witApi.getWorkItems(ids);  
-      const data = workitems.filter((obj) => obj.fields["System.Title"].toLowerCase().includes(name));
-      res.send(data);     
-    }
-  } catch (err) {
-    console.error("Error:", err);
-    res.send(500, 'Internal Server Error'+err); // Send an error response
-  } 
 });
 
 // Listen for incoming requests.

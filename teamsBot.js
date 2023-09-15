@@ -12,11 +12,9 @@ class TeamsBot extends TeamsActivityHandler {
   // Search.
   async handleTeamsMessagingExtensionQuery(context, query) {
     const searchQuery = query.parameters[0].value;   
-    const response = await axios.get(
-      `https://${config.host}/api/workitems/${searchQuery}`
-    );
+    const response =  await getWorkItem(searchQuery);
     const attachments = [];
-    response.data.forEach((obj) => {
+    response.forEach((obj) => {      
       const templateJson = require('./cards/searchItemCard.js')
       let displayName = "";
       if (obj.fields["System.AssignedTo"])
@@ -58,6 +56,7 @@ class TeamsBot extends TeamsActivityHandler {
       },
     };
   }
+
   async handleTeamsMessagingExtensionSelectItem(context, obj) {
     const templateJson = require('./cards/taskCard.js')
     const template = new ACData.Template(templateJson);
