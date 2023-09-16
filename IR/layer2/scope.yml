@@ -1,5 +1,5 @@
 files:
   - "azservice":
-    path: "azservice.js"
+    path: "index.js"
     language: "js"
     description: "This is a collection of helper functions to connect to Azure Services via rest APIs"
