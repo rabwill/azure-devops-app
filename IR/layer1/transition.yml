@@ -1,6 +1,5 @@
 up:
-  - "Did the GraphQL API change? Did we add new queries or mutations? Did the fields or types change?"
+  - "Did the Search API change? Do we need to create endpoints for new search criteria?"
   - "Did the model change? Did we add new fields or remove existing fields?"
 down:
-  - "Did a new shortcut get added or removed from the Row View? Generate a Figma component with name Row View - Shortcut <number> data source: <source> icon: <icon> action: <action>"
-  - "Did the footer change? If so, what is the new footer text, style?"
+  - "not applicable"

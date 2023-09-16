@@ -1,8 +1,8 @@
 const axios = require("axios");
 const { TeamsActivityHandler, CardFactory, MessageFactory } = require("botbuilder");
 const ACData = require("adaptivecards-templating");
-const config = require("./config");
-const { updateWorkitem,getWorkItemDetails, createWorkItem,getWorkItem } = require("./azservice");
+const config = require("../config");
+const { updateWorkitem, getWorkItemDetails, createWorkItem, getWorkItem } = require("../api");
 
 class TeamsBot extends TeamsActivityHandler {
   constructor() {
@@ -11,10 +11,10 @@ class TeamsBot extends TeamsActivityHandler {
   // Message extension Code
   // Search.
   async handleTeamsMessagingExtensionQuery(context, query) {
-    const searchQuery = query.parameters[0].value;   
-    const response =  await getWorkItem(searchQuery);
+    const searchQuery = query.parameters[0].value;
+    const response = await getWorkItem(searchQuery);
     const attachments = [];
-    response.forEach((obj) => {      
+    response.forEach((obj) => {
       const templateJson = require('./cards/searchItemCard.js')
       let displayName = "";
       if (obj.fields["System.AssignedTo"])
@@ -105,9 +105,9 @@ class TeamsBot extends TeamsActivityHandler {
         path: '/fields/System.State',
         value: obj.editedState,
       }];
-   //call update workitem function from index.js
-    const resp = await updateWorkitem(obj.id, updates);    
-   
+    //call update workitem function from index.js
+    const resp = await updateWorkitem(obj.id, updates);
+
     const userName = context.activity.from.name;
     const mention = {
       type: "mention",
@@ -134,10 +134,10 @@ class TeamsBot extends TeamsActivityHandler {
   async handleTeamsMessagingExtensionFetchTask(context, action) {
     switch (action.commandId) {
       case "createWorkItem": {
-        let title="";
-        if(action.messagePayload){
-          title=extractTextFromHTML(action.messagePayload.body.content); 
-        }        
+        let title = "";
+        if (action.messagePayload) {
+          title = extractTextFromHTML(action.messagePayload.body.content);
+        }
         const obj = { title: title, status: "To Do" };
         const templateJson = require('./cards/createCard.js')
         const template = new ACData.Template(templateJson);
@@ -152,72 +152,72 @@ class TeamsBot extends TeamsActivityHandler {
               card: resultCard,
               height: 350,
               width: 800,
-              title: "Create workItem"                
-            }    
+              title: "Create workItem"
+            }
           }
         }
-      }        
+      }
       default: {
         return null;
       }
     }
   }
 
-  async handleTeamsMessagingExtensionSubmitAction (context, action) {
+  async handleTeamsMessagingExtensionSubmitAction(context, action) {
     try {
 
-        if(action.data.title) {         
-          const updates = [
-            {
-              op: 'add',
-              path: '/fields/System.Title',
-              value: action.data.title,
-            },
-            {
-              op: 'add',
-              path: '/fields/System.State',
-              value: action.data.status,
-            }];
-         //call update workitem function from index.js
-          const resp = await createWorkItem(updates);
-          const obj={editedTitle:action.data.title, editedState:action.data.status, projectName:config.projectName, url:`${config.wiUrl}/edit/${resp.id}/`};
+      if (action.data.title) {
+        const updates = [
+          {
+            op: 'add',
+            path: '/fields/System.Title',
+            value: action.data.title,
+          },
+          {
+            op: 'add',
+            path: '/fields/System.State',
+            value: action.data.status,
+          }];
+        //call update workitem function from index.js
+        const resp = await createWorkItem(updates);
+        const obj = { editedTitle: action.data.title, editedState: action.data.status, projectName: config.projectName, url: `${config.wiUrl}/edit/${resp.id}/` };
 
-          const userName = context.activity.from.name;
-          const mention = {
-            type: "mention",
-            mentioned: context.activity.from,
-            text: `<at>${userName}</at>`,
-          };
-          const topLevelMessage = MessageFactory.text(`Thank you for creating a new work item  ${mention.text}`);
-          topLevelMessage.entities = [mention];
-          const templateJson = require('./cards/viewCard.js')
-          const template = new ACData.Template(templateJson);
-          const card = template.expand({
-            $root: obj
-          });
-          const resultCard = CardFactory.adaptiveCard(card);
-          await context.sendActivity(topLevelMessage);
-          await context.sendActivity({
-            type: 'message',
-            attachments: [resultCard],
-          });
-        }
+        const userName = context.activity.from.name;
+        const mention = {
+          type: "mention",
+          mentioned: context.activity.from,
+          text: `<at>${userName}</at>`,
+        };
+        const topLevelMessage = MessageFactory.text(`Thank you for creating a new work item  ${mention.text}`);
+        topLevelMessage.entities = [mention];
+        const templateJson = require('./cards/viewCard.js')
+        const template = new ACData.Template(templateJson);
+        const card = template.expand({
+          $root: obj
+        });
+        const resultCard = CardFactory.adaptiveCard(card);
+        await context.sendActivity(topLevelMessage);
+        await context.sendActivity({
+          type: 'message',
+          attachments: [resultCard],
+        });
+      }
     }
     catch (e) {
-        console.log(e);
+      console.log(e);
     }
-}
-  
+  }
+
   //Link unfurl Code
   //https://dev.azure.com/rwilliams108/Microsoft%20365%20advocacy/_workitems/edit/8
 
   async handleTeamsAppBasedLinkQuery(context, query) {
     const workItemNumber = extractWorkItemNumber(query.url);
     let attachment = {};
-    if (workItemNumber) {  
+    if (workItemNumber) {
       //task card    
       const data = await getWorkItemDetails(workItemNumber);
-      const obj={editedTitle:data.fields["System.Title"], editedState:data.fields["System.State"], projectName:config.projectName, url:`${config.wiUrl}/edit/${data.id}/`};
+      const obj = { editedTitle: data.fields["System.Title"], editedState: data.fields["System.State"], projectName: config.projectName, url: `${config.wiUrl}/edit/${data.id}/` };
       const templateJson = require('./cards/viewCard.js')
       const template = new ACData.Template(templateJson);
       const card = template.expand({
@@ -261,7 +261,7 @@ const setTaskInfo = (taskInfo) => {
   taskInfo.width = 800;
   taskInfo.title = "";
 }
-const extractWorkItemNumber=(url)=> {
+const extractWorkItemNumber = (url) => {
   // Check if the URL contains "_workitems/edit/"
   const regex = /_workitems\/edit\/(\d+)/;
   const match = url.match(regex);
@@ -274,7 +274,7 @@ const extractWorkItemNumber=(url)=> {
     return null;
   }
 }
-const extractTextFromHTML=(html)=> {
+const extractTextFromHTML = (html) => {
   return html.replace(/<[^>]*>/g, '');
 }
 module.exports.TeamsBot = TeamsBot;
