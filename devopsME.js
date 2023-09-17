@@ -2,17 +2,14 @@ const axios = require("axios");
 const { CardFactory,MessageFactory } = require("botbuilder");
 const ACData = require("adaptivecards-templating");
 const config = require("./config");
-const { updateWorkitem,getWorkItemDetails, createWorkItem } = require("./azservice");
+const { getWorkItem,updateWorkitem,getWorkItemDetails, createWorkItem } = require("./azservice");
 
 async function query(context, state, query){
     //const searchQuery = context.activity.value.parameters[0].value;
-  const searchQuery = query.parameters.searchQuery;
-  const response = await axios.get(
-    `http://localhost:3978/api/workitems/${searchQuery}`
-  );
-
+  const searchQuery = query.parameters.searchQuery; 
+  const response =  await getWorkItem(searchQuery);
   const attachments = [];
-  response.data.forEach((obj) => {
+  response.forEach((obj) => {
     const templateJson = require('./cards/searchItemCard.js')
     let displayName = "";
     if (obj.fields["System.AssignedTo"])

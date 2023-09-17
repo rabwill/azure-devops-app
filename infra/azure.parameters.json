@@ -31,10 +31,6 @@
     },
     "projectName": {
       "value": "${{PROJECT_NAME}}"
-    },
-    "host": {
-      "value": "${{BOT_DOMAIN}}"
     }
-
   }
 }

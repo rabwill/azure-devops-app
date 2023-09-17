@@ -7,7 +7,6 @@ param previewimage string
 param wiUrl string
 param orgName string
 param projectName string
-param host string
 @description('Required when create Azure Bot service')
 param botAadAppClientId string
 
@@ -84,10 +83,6 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
         {
           name: 'PROJECT_NAME'
           value: projectName
-        }
-          {
-          name: 'BOT_DOMAIN'
-          value: host
         }
       ]
       ftpsState: 'FtpsOnly'
