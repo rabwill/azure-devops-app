@@ -1,21 +1,21 @@
 files:
   - "create":
-    path: "createCard.js"
+    path: "cards/createCard.js"
     language: "js"
     description: "This is a Create Card. It renders a form and buttons for actions like submit."
   - "edit":
-    path: "editCard.js"
+    path: "cards/editCard.js"
     language: "js"
     description: "This is a Edit Card. It renders a form and buttons for actions like submit."
   - "item":
-    path: "searchItemCard.js"
+    path: "cards/searchItemCard.js"
     language: "js"
     description: "This describes the UI for search. It renders a text box to search and how to present the list of results."
   - "task":
-    path: "taskCard.js"
+    path: "cards/taskCard.js"
     language: "js"
     description: "This describe how to render a task card. It renders a task card with title, description and buttons for actions like edit, delete."
   - "view":
-    path: "viewCard.js"
+    path: "cards/viewCard.js"
     language: "js"
     description: "This is a View Card. It renders a form and buttons for actions like submit."
