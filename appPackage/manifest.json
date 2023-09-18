@@ -5,7 +5,7 @@
     "id": "${{TEAMS_APP_ID}}",
     "packageName": "com.microsoft.teams.extension.azdevops",
     "developer": {
-        "name": "Rabia Williams",
+        "name": "Consoto Inc",
         "websiteUrl": "https://www.example.com",
         "privacyUrl": "https://www.example.com/termofuse",
         "termsOfUseUrl": "https://www.example.com/privacy"
@@ -15,12 +15,12 @@
         "outline": "outline.png"
     },
     "name": {
-        "short": "AzDevOps Helper",
-        "full": "AzDevOps Helper"
+        "short": "Billing Helper",
+        "full": "Billing Helper"
     },
     "description": {
-        "short": "Find and manage AzDevOps work items",
-        "full": "Manage and find AzDevOps work items"
+        "short": "Find and manage Billables & Invoices",
+        "full": "Manage and find Billables & Invoices"
     },
     "accentColor": "#FFFFFF",
     "bots": [
@@ -54,27 +54,27 @@
                         "compose",
                         "commandBox"
                     ],
-                    "description": "Search work items in AzDevOps",
+                    "description": "Search billables",
                     "title": "Search",
                     "type": "query",
                     "parameters": [
                         {
                             "name": "searchQuery",
                             "title": "Search Query",
-                            "description": "Search work items in AzDevOps",
+                            "description": "Search by client name",
                             "inputType": "text"
                         }
                     ]
                 },
                 {
-                    "id": "createWorkItem",
+                    "id": "createBillable",
                     "context": [
                         "compose",
                         "message",
                         "commandBox"
                     ],
-                    "description": "Create work item in AzDevOps",
-                    "title": "Create work item in AzDevOps",
+                    "description": "Create Billable",
+                    "title": "Create Billable",
                     "type": "action",
                     "fetchTask": true
                 }

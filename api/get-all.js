@@ -6,7 +6,7 @@ async function getAll(name) {
         const db = await initialiseDb();
         const query = `SELECT * FROM records WHERE client LIKE '%${name}%'`;
         results = await db.all(query);
-        console.log(results);
+        // console.log(results);
         return results;
     } catch (err) {
         console.error("Error:", err);

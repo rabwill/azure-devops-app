@@ -16,30 +16,31 @@ class TeamsBot extends TeamsActivityHandler {
     const attachments = [];
     response.forEach((obj) => {
       const templateJson = require('./cards/searchItemCard.js')
-      let displayName = "";
-      if (obj["partner"])
-        displayName = obj["partner"].displayName ?? "";
       const imgUrl = `${config.previewimage}?raw=true`;
-      const previewTitle = ` ${obj["status"]} | ${displayName} | ${obj["hours"]}`;
       const preview = CardFactory.thumbnailCard(
         obj["client"],
         [{ url: imgUrl }],
         [{
           type: 'openUrl',
-          title: 'View workitem',
+          title: 'View billable',
           value: `${config.wiUrl}/edit/${obj.id}/`
         }],
         {
-          text: `${previewTitle}`,
+          text: `${obj["hours"]} | ${obj["partner"]} | ${obj["work"]}`,
         }
       );
+      const data = {
+        client: obj["client"],
+        partner: obj["partner"],
+        work: obj["work"],
+        hours: obj["hours"],
+        status: obj["status"]
+      }
       preview.content.tap = {
         type: "invoke",
-        value: {
-          status: obj["status"], id: obj.id, url: `${config.wiUrl}/edit/${obj.id}/`, title: obj["partner"]
-        },
+        value: data,
       };
-      const data = { title: obj["partner"], displayName: displayName, status: obj["status"] }
+
       const template = new ACData.Template(templateJson);
       const card = template.expand({
         $root: data
@@ -97,13 +98,18 @@ class TeamsBot extends TeamsActivityHandler {
     const updates = [
       {
         op: 'add',
-        path: 'client',
-        value: obj.editedTitle,
+        path: 'work',
+        value: obj.work
+      },
+      {
+        op: 'add',
+        path: 'hours',
+        value: obj.hours,
       },
       {
         op: 'add',
         path: 'status',
-        value: obj.editedState,
+        value: obj.status,
       }];
     //call update workitem function from index.js
     const resp = await update(obj.id, updates);
@@ -133,12 +139,12 @@ class TeamsBot extends TeamsActivityHandler {
   //action based ME
   async handleTeamsMessagingExtensionFetchTask(context, action) {
     switch (action.commandId) {
-      case "createWorkItem": {
+      case "createBillable": {
         let title = "";
         if (action.messagePayload) {
           title = extractTextFromHTML(action.messagePayload.body.content);
         }
-        const obj = { title: title, status: "To Do" };
+        const obj = { client: "", partner: "", work: "", hours: "", status: "pending" };
         const templateJson = require('./cards/createCard.js')
         const template = new ACData.Template(templateJson);
         const card = template.expand({
@@ -150,9 +156,9 @@ class TeamsBot extends TeamsActivityHandler {
             type: 'continue',
             value: {
               card: resultCard,
-              height: 350,
+              height: 500,
               width: 800,
-              title: "Create workItem"
+              title: "Create Billable"
             }
           }
         }
@@ -166,12 +172,17 @@ class TeamsBot extends TeamsActivityHandler {
   async handleTeamsMessagingExtensionSubmitAction(context, action) {
     try {
 
-      if (action.data.title) {
+      if (action.commandId === "createBillable") {
         const updates = [
           {
             op: 'add',
-            path: 'partner',
-            value: action.data.title,
+            path: 'work',
+            value: action.data.work,
+          },
+          {
+            op: 'add',
+            path: 'hours',
+            value: action.data.hours,
           },
           {
             op: 'add',
@@ -180,7 +191,7 @@ class TeamsBot extends TeamsActivityHandler {
           }];
         //call update workitem function from index.js
         const resp = await create(updates);
-        const obj = { editedTitle: action.data.title, editedState: action.data.status, url: `${config.wiUrl}/edit/${resp.id}/` };
+        const obj = { client: action.data.client, status: action.data.status, url: `${config.wiUrl}/edit/${resp.id}/` };
 
         const userName = context.activity.from.name;
         const mention = {
@@ -214,7 +225,14 @@ class TeamsBot extends TeamsActivityHandler {
     if (id) {
       //task card    
       const data = await getOne(id);
-      const obj = { editedTitle: data.fields["partner"], editedState: data.fields["status"], url: `${config.wiUrl}/edit/${data.id}/` };
+      const obj = {
+        client: obj["client"],
+        partner: obj["partner"],
+        work: obj["work"],
+        hours: obj["hours"],
+        status: obj["status"],
+        url: `${config.wiUrl}/edit/${data.id}/`
+      };
       const templateJson = require('./cards/viewCard.js')
       const template = new ACData.Template(templateJson);
       const card = template.expand({

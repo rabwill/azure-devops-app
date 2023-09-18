@@ -1,6 +1,6 @@
 const { initialiseDb } = require("./common");
 
-async function getWorkItemDetails(id) {
+async function getOne(id) {
     try {
         const db = initialiseDb();
         const query = `SELECT * FROM records WHERE id = '{id}'`;
@@ -12,5 +12,5 @@ async function getWorkItemDetails(id) {
 }
 
 module.exports = {
-    getWorkItemDetails
+    getOne
 };

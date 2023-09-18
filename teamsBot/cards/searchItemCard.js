@@ -1,4 +1,4 @@
-const searchCard={
+const searchCard = {
     type: "AdaptiveCard",
     body: [
         {
@@ -26,7 +26,7 @@ const searchCard={
                         {
                             type: "TextBlock",
                             size: "Medium",
-                            text: "${title}",
+                            text: "${client}",
                             spacing: "None",
                             horizontalAlignment: "Left",
                             style: "columnHeader",
@@ -53,13 +53,25 @@ const searchCard={
                 },
                 {
                     type: "Column",
+                    width: "auto",
+                    items: [
+                        {
+                            type: "TextBlock",
+                            text: "${hours} hrs",
+                            wrap: true,
+                            isSubtle: true
+                        }
+                    ]
+                },
+                {
+                    type: "Column",
                     width: "stretch",
                     items: [
                         {
                             type: "TextBlock",
                             size: "Default",
                             weight: "Default",
-                            text: "${displayName}",
+                            text: "${partner} | ${work}",
                             isSubtle: true
                         }
                     ]

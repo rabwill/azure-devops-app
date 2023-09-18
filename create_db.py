@@ -29,7 +29,7 @@ def main(conn_str: str):
     # Update sample data with Indian names for Partners and Clients
     partners = ["Aarav", "Priya", "Rohan", "Deepika", "Vivek"]
     clients = ["TechSolutions", "HealthCare Pvt Ltd", "EduTutors", "GreenEnergy Corp", "FinBank Services"]
-    work = ["Drafted SOW for New Stream", "Developed Playbook", "Executive Briefing","Operational Support", "Testing"]
+    work_options = ["Drafted SOW for New Stream", "Developed Playbook", "Executive Briefing","Operational Support", "Testing"]
     statuses = ["billed", "pending"]
 
     # Generate 20 rows of sample data
@@ -37,7 +37,7 @@ def main(conn_str: str):
     for _ in range(20):
         partner = random.choice(partners)
         client = random.choice(clients)
-        work = random.choice(work)
+        work = random.choice(work_options)
         hours = random.choice([x * 0.5 for x in range(1, 41)])  # 0.5 to 20 with 0.5 increments
         status = random.choice(statuses)
         sample_data.append((partner, client, work, hours, status))

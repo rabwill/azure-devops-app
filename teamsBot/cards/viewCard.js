@@ -8,7 +8,7 @@ const ViewCard= {
         items: [
           {
             type: "TextBlock",
-            text: "Azure DevOps WorkItems",
+            text: "${work}",
             weight: "Bolder",
             size: "Large"
           },
@@ -21,7 +21,7 @@ const ViewCard= {
                     items: [
                         {
                             type: "TextBlock",
-                            text: "Title:",
+                            text: "Client:",
                             weight: "Bolder"
                         }
                     ]
@@ -32,7 +32,7 @@ const ViewCard= {
                     items: [
                         {
                             type: "TextBlock",
-                            text: "${editedTitle}",
+                            text: "${client}",
                             wrap: true
                         }
                     ]
@@ -48,7 +48,7 @@ const ViewCard= {
                     items: [
                         {
                             type: "TextBlock",
-                            text: "Project Name:",
+                            text: "Partner:",
                             weight: "Bolder",
                             spacing: "Small"
                         }
@@ -60,7 +60,7 @@ const ViewCard= {
                     items: [
                         {
                             type: "TextBlock",
-                            text: "${projectName}",
+                            text: "${partner}",
                             wrap: true
                         }
                     ]
@@ -88,9 +88,9 @@ const ViewCard= {
                     items: [
                         {
                             type: "TextBlock",
-                            text: "${editedState}",
+                            text: "${status}",
                             wrap: true,
-                            color: "${if(editedState == Done, 'good', 'warning')}"
+                            color: "${if(status == Done, 'good', 'warning')}"
                         }
                     ]
                 }
