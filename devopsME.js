@@ -31,7 +31,7 @@ async function query(context, state, query){
     preview.content.tap = {
       type: "invoke",
       value: {
-        status: obj.fields["System.State"], id: obj.id, url: `${config.wiUrl}/edit/${obj.id}/`, title: obj.fields["System.Title"], projectName: obj.fields["System.TeamProject"]
+        status: obj.fields["System.State"], id: obj.id, url: `${config.wiUrl}/edit/${obj.id}/`, title: obj.fields["System.Title"], projectName: config.projectName
       },
     };
     const data = { title: obj.fields["System.Title"], displayName: displayName, status: obj.fields["System.State"] }

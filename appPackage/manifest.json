@@ -3,7 +3,7 @@
     "manifestVersion": "1.16",
     "version": "1.0.0",
     "id": "${{TEAMS_APP_ID}}",
-    "packageName": "com.microsoft.teams.extension.azdevops",
+    "packageName": "com.microsoft.teams.extension.devopsify",
     "developer": {
         "name": "Microsoft 365 Dev Advocacy",
         "websiteUrl": "https://www.example.com",
