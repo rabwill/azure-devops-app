@@ -1,15 +1,21 @@
-const azdev = require('azure-devops-node-api');
+const sqlite3 = require('sqlite3');
+const open = require('sqlite').open;
 const config = require("../config");
+const path = require('path');
 
-//function to initialise the AzDevOpsService
-async function initialiseAzDevOpsService() {
-    let orgUrl = `https://dev.azure.com/${config.orgName}`;
-    let token = config.azpat;
-    let authHandler = azdev.getPersonalAccessTokenHandler(token);
-    let azconnection = new azdev.WebApi(orgUrl, authHandler);
-    return azconnection;
+sqlite3.verbose()
+
+// make connection to sqlite3 database
+async function initialiseDb() {
+    console.log(`Connecting to be db ${config.connectionString}`);
+    const absolutePath = path.resolve(config.connectionString);
+    console.log(`Connecting to db at ${absolutePath}`);
+    return open({
+        filename: config.connectionString,
+        driver: sqlite3.Database
+    })
 }
 
 module.exports = {
-    initialiseAzDevOpsService
+    initialiseDb
 };

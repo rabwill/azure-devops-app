@@ -1,16 +1,16 @@
 
-const { initialiseAzDevOpsService } = require('./common');
-const { updateWorkitem } = require('./updateWorkitem');
-const { getWorkItemDetails } = require('./getWorkItemDetails');
-const { createWorkItem } = require('./createWorkItem');
-const { getWorkItem } = require('./getWorkItem');
+const { initialiseDb } = require('./common');
+const { update } = require('./update');
+const { getOne } = require('./get-one');
+const { create } = require('./create');
+const { getAll } = require('./get-all');
 
 module.exports = {
-    initialiseAzDevOpsService,
-    updateWorkitem,
-    getWorkItemDetails,
-    createWorkItem,
-    getWorkItem
+    initialiseDb,
+    update,
+    getOne,
+    create,
+    getAll
 };
 
 
