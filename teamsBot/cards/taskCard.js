@@ -113,7 +113,7 @@ const TaskCard = {
         },
         {
             type: 'Action.Submit',
-            client: "🖨️ Generate Invoice",
+            title: "🖨️ Generate Invoice",
             data: { msteams: { type: 'task/fetch' }, data: { url: "${url}", id: "${id}", client: "${client}", partner: "${partner}", work: "${work}", status: "${status}" } }
         }
     ]
