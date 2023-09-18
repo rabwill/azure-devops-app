@@ -1,4 +1,4 @@
 introspection:
-  - "Has the search functionality changed? Do we need to render a different UI for search?"
-  - "Does the create functionality need to change? Are new fields added to the create form? Are new actions added to the create form?"
-  - "Does the edit functionality need to change? Are new fields added to the edit form? Are new actions added to the edit form?"
+  - "Are new fields added to or old fields removed from Search Results list view? How do we update the Search Results list view?"  
+  - "Are new fields added to or old fields removed from the Create Form ? How do we update the Create Form? Do we need to update the actions for the Create Form?"
+  - "Are new fields added to or old fields removed from the Edit Form ? How do we update the Edit Form? Do we need to update any of the actions for the Edit Form?"
