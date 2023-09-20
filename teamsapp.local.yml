@@ -86,8 +86,7 @@ deploy:
       target: ./.localConfigs
       envs:
         BOT_ID: ${{BOT_ID}}
-        BOT_PASSWORD: ${{SECRET_BOT_PASSWORD}}
-        AZURE_PERSONAL_ACCESS_TOKEN: ${{AZURE_PERSONAL_ACCESS_TOKEN}}
+        BOT_PASSWORD: ${{SECRET_BOT_PASSWORD}}        
         PREVIEW_IMAGE: ${{PREVIEW_IMAGE}}
         WORK_ITEM_URL: ${{WORK_ITEM_URL}}
         ORG_NAME: ${{ORG_NAME}}
