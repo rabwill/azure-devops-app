@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "teams-app-agent"
+version = "0.1.0"
+description = ""
+authors = ["Sameer Segal <sameersegal@microsoft.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pwr = { version = "^0.1.0", source = "fury" }
+python-dotenv = "^1.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "default"
+
+[[tool.poetry.source]]
+name = "fury"
+url = "https://pypi.fury.io/pwr"
+priority = "supplemental"
+
