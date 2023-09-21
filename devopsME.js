@@ -14,27 +14,31 @@ async function query(context, state, query){
     let displayName = "";
     if (obj.fields["System.AssignedTo"])
       displayName = obj.fields["System.AssignedTo"].displayName ?? "";
-    const imgUrl = `${config.previewimage}?raw=true`;
-    const previewTitle = ` ${obj.fields["System.State"]} | ${displayName}`;
-    const preview = CardFactory.thumbnailCard(
-      obj.fields["System.Title"],
-      [{ url: imgUrl }],
-      [{
-        type: 'openUrl',
-        title: 'View workitem',
-        value: `${config.wiUrl}/edit/${obj.id}/`
-      }],
-      {
-        text: `${previewTitle}`,
-      }
-    );
+      const imgUrl = `${config.previewimage}?raw=true`;
+      const previewTitle = ` ${obj.fields["System.State"]} | ${displayName}`;
+      const preview = CardFactory.thumbnailCard(
+        obj.fields["System.Title"],
+        [{ url: imgUrl }],
+        [{
+          type: 'openUrl',
+          title: 'View workitem',
+          value: `${config.wiUrl}/edit/${obj.id}/`
+        }],
+        {
+          text: `${previewTitle}`,
+        }
+      );
     preview.content.tap = {
       type: "invoke",
       value: {
-        status: obj.fields["System.State"], id: obj.id, url: `${config.wiUrl}/edit/${obj.id}/`, title: obj.fields["System.Title"], projectName: config.projectName
+        status: obj.fields["System.State"], 
+        id: obj.id, 
+        url: `${config.wiUrl}/edit/${obj.id}/`, 
+        title: obj.fields["System.Title"], 
+        projectName: config.projectName
       },
     };
-    const data = { title: obj.fields["System.Title"], displayName: displayName, status: obj.fields["System.State"] }
+    const data = { title: obj.fields["System.Title"], displayName: displayName, status: obj.fields["System.State"]}
     const template = new ACData.Template(templateJson);
     const card = template.expand({
       $root: data
@@ -93,7 +97,8 @@ async function taskModuleSubmit(context, data){
         op: 'add',
         path: '/fields/System.State',
         value: obj.editedState,
-      }];
+      }
+    ];
    //call update workitem function from index.js
     const resp = await updateWorkitem(obj.id, updates);    
    
@@ -127,11 +132,12 @@ async function fetchTask(context, action){
   switch (action.commandId) {
     case "createWorkItem": {
       let title="";
+      let description= "";
       var taskInfo = {};
       if(action.messagePayload){
         title=extractTextFromHTML(action.messagePayload.body.content); 
       }        
-      const obj = { title: title, status: "To Do" };
+      const obj = { title: title, status: "To Do", description: description };
       const templateJson = require('./cards/createCard.js')
       const template = new ACData.Template(templateJson);
       const card = template.expand({
@@ -141,16 +147,36 @@ async function fetchTask(context, action){
       taskInfo.card = resultCard;
       setTaskInfo(taskInfo);
       return taskInfo;
-    }        
+    }
+    default: {
+      return null;
+    }
+  }
+}
+async function fetchDescription(context, action){
+  switch (action.verb) {
+    case "generateDescription": {
+      var taskInfo = {};
+      const obj = { title: action.title, status: action.status, description: action.description };
+      const templateJson = require('./cards/createCard.js');
+      const template = new ACData.Template(templateJson);
+      const card = template.expand({
+        $root: obj
+      });
+      const resultCard = CardFactory.adaptiveCard(card);
+      taskInfo.card = resultCard;
+      setTaskInfo(taskInfo);
+      return taskInfo;
+    }  
     default: {
       return null;
     }
   }
 }
 
+
 async function submitAction(context, action){
   try {
-
     if(action.title) {         
       const updates = [
         {
@@ -160,12 +186,17 @@ async function submitAction(context, action){
         },
         {
           op: 'add',
+          path: '/fields/System.Description',
+          value: action.description,
+        },
+        {
+          op: 'add',
           path: '/fields/System.State',
           value: action.status,
         }];
      //call update workitem function from index.js
       const resp = await createWorkItem(updates);
-      const obj={editedTitle:action.title, editedState:action.status, projectName:config.projectName, url:`${config.wiUrl}/edit/${resp.id}/`};
+      const obj={editedTitle:action.title, editedState:action.status,description: action.description, projectName:config.projectName, url:`${config.wiUrl}/edit/${resp.id}/`};
 
       const userName = context.activity.from.name;
       const mention = {
@@ -192,7 +223,6 @@ catch (e) {
     console.log(e);
 }
 }
-
  //Link unfurl Code
 //https://dev.azure.com/rwilliams108/Microsoft%20365%20advocacy/_workitems/edit/8
 
@@ -241,7 +271,7 @@ async function linkQuery(context, query){
   }
 
 const setTaskInfo = (taskInfo) => {
-  taskInfo.height = 350;
+  taskInfo.height = 400;
   taskInfo.width = 800;
   taskInfo.title = "";
 }
@@ -262,4 +292,4 @@ const extractTextFromHTML=(html)=> {
   return html.replace(/<[^>]*>/g, '');
 }
 
-module.exports = { query, selectItem, taskModuleFetch, taskModuleSubmit, fetchTask, submitAction, linkQuery };
+module.exports = { query, selectItem, taskModuleFetch, taskModuleSubmit, fetchTask, submitAction, linkQuery, fetchDescription };

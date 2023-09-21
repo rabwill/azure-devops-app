@@ -5,7 +5,9 @@ const config = {
   previewimage:process.env.PREVIEW_IMAGE,
   wiUrl:process.env.WORK_ITEM_URL,
   orgName:process.env.ORG_NAME,
-  projectName:process.env.PROJECT_NAME
+  projectName:process.env.PROJECT_NAME,
+  openAIKey: process.env.SECRET_OPENAI_API_KEY,
+  openAIEndpoint: process.env.AZURE_OPENAI_ENDPOINT
 };
 
 module.exports = config;

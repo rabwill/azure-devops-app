@@ -12,36 +12,74 @@ const CreateCard= {
             weight: "Bolder",            
             size: "Large"
           },
-      {
-        type: "Input.Text",
-        id: "title",
-        label: "Title",
-        separator: true,
-        placeholder: "Enter new title",
-        value: "${title}", 
-      },
-      {
-        "type": "Input.ChoiceSet",
-        "id": "status",
-        "weight": "Bolder",
-        "label": "Status",
-        "style": "expanded",
-        "value": "${status}",
-        "choices": [
           {
-            "title": "To Do",
-            "value": "To Do"
+            type: "Input.Text",
+            id: "title",
+            label: "Title",
+            separator: true,
+            placeholder: "Enter new title",
+            value: "${title}", 
           },
           {
-            "title": "Doing",
-            "value": "Doing"
+            type: "ColumnSet",
+            columns: [
+              {
+              type: "Column",
+              items: [
+                        {
+                          type: "Input.Text",
+                          id: "description",
+                          label: "Description",
+                          style: "text",
+                          isMultiline: true,
+                          wrap: true,
+                          separator: true,
+                          placeholder: "Enter new description",
+                          value: "${description}", 
+                        },
+                        {
+                          type: "ActionSet",
+                          actions: [
+                            {
+                              type: "Action.Submit",
+                              style: "positive",
+                              title: "🤖 Generate Description",
+                              data: {
+                                verb: "generateDescription",
+                                title: "${title.value}",
+                                status: "${status.value}",
+                                description: "${description}"
+                              },
+                            },
+                          ]
+                        }
+                     ],
+                }
+              ]
+
           },
           {
-            "title": "Done",
-            "value": "Done"
-          }
-        ]
-      }]
+            "type": "Input.ChoiceSet",
+            "id": "status",
+            "weight": "Bolder",
+            "label": "Status",
+            "style": "expanded",
+            "value": "${status}",
+            "choices": [
+              {
+                "title": "To Do",
+                "value": "To Do"
+              },
+              {
+                "title": "Doing",
+                "value": "Doing"
+              },
+              {
+                "title": "Done",
+                "value": "Done"
+              }
+            ]
+          }]
 
     }
     ],
@@ -53,9 +91,10 @@ const CreateCard= {
         data: {
           verb:"createWorkItem",
           title: "${title.value}",
-          status: "${status.value}"    
+          status: "${status.value}",
+          description: "${description}"  
         },
-      },
+      }
     ],
   };
   module.exports = CreateCard;

@@ -9,7 +9,6 @@ const {
   MemoryStorage
 } = require("botbuilder");
 const config = require("./config");
-
 // Create adapter.
 // See https://aka.ms/about-bot-adapter to learn more about adapters.
 const credentialsFactory = new ConfigurationServiceClientCredentialFactory({
@@ -46,28 +45,44 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 });
 
 
-const { Application } = require("@microsoft/teams-ai");
+const { Application, DefaultPromptManager, AzureOpenAIPlanner, AdaptiveCards } = require("@microsoft/teams-ai");
+const path = require("path");
 
+// Create AI components
+const planner = new AzureOpenAIPlanner({
+  apiKey: config.openAIKey,
+    endpoint: config.openAIEndpoint,
+    apiVersion:'2023-03-15-preview',
+    defaultModel: 'gpt-35-turbo',
+    logRequests: true,
+    useSystemMessage: true
+});
+const promptManager = new DefaultPromptManager(path.join(__dirname, './prompts'));
 // Define storage and application
 const storage = new MemoryStorage();
 const app = new Application({
-    storage
+    storage,
+    ai:{
+      planner,
+      promptManager,
+      prompt: 'generate'
+    }
 });
 
 const devopsME = require("./devopsME");
 
 app.messageExtensions.query("searchQuery", devopsME.query);
 
-app.messageExtensions.selectItem((context, state, item) => {  
-  return devopsME.selectItem(context, item);      
+app.messageExtensions.selectItem((context, state, item) => {
+  return devopsME.selectItem(context, item);
 });
 
 app.taskModules.fetch("taskFetch", (context, state, data) => {
-  return devopsME.taskModuleFetch(context, data);
+    return devopsME.taskModuleFetch(context, data);
 });
 
 app.taskModules.submit("taskSubmit", (context, state, data) => {
-  return devopsME.taskModuleSubmit(context, data);
+    return devopsME.taskModuleSubmit(context, data);
 });
 
 app.messageExtensions.fetchTask("createWorkItem", (context, state) => {
@@ -75,14 +90,27 @@ app.messageExtensions.fetchTask("createWorkItem", (context, state) => {
 });
 
 app.messageExtensions.submitAction("createWorkItem", (context, state, data) => {
-  return devopsME.submitAction(context, data);
+  switch (data.verb) {
+    case "createWorkItem":
+      return devopsME.submitAction(context, data);
+    case "generateDescription":
+      return generate(context, state, data);
+    default:
+      return Promise.resolve();
+  }
 });
 
 app.messageExtensions.queryLink((context, state, url) => {
   return devopsME.linkQuery(context, url);
 });
 
-
+async function generate(context, state, data) {
+  const response = await app.ai.completePrompt(data.title, state, "generate").then((response) => {
+  data.description = response; 
+  return devopsME.fetchDescription(context, data);
+  });
+  return response;
+}
 // Listen for incoming requests.
 server.post("/api/messages", async (req, res) => {
   await adapter.process(req, res, async (context) => {

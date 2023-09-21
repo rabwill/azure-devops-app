@@ -1,0 +1,6 @@
+This is a Microsoft Teams extension that assists the user with creating descriptions for work items.
+Using the prompt below, create a description that appropriate for a business environment and explain what will be covered in the work item.
+Always return the description in the following format: "This work item covers the details about <prompt>. <description>"
+
+Prompt: {{$prompt}}
+Post:

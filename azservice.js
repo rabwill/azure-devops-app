@@ -26,7 +26,7 @@ async function getWorkItem(name) {
           for (const workItem of result.workItems) {    
             ids.push(workItem.id);
           }    
-          const fields= ["id","System.Title","System.State","System.AssignedTo"];   
+          const fields= ["id","System.Title","System.State","System.AssignedTo", "System.Description"];   
           workitems= await witApi.getWorkItems(ids,fields);  
           const data = workitems.filter((obj) => obj.fields["System.Title"].toLowerCase().includes(name));
           return data;   
