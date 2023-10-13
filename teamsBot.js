@@ -15,31 +15,15 @@ class TeamsBot extends TeamsActivityHandler {
     const response =  await getWorkItem(searchQuery);
     const attachments = [];
     response.forEach((obj) => {      
-      const templateJson = require('./cards/searchItemCard.js')
+      const templateJson = require('./cards/taskCard.js')
       let displayName = "";
       if (obj.fields["System.AssignedTo"])
         displayName = obj.fields["System.AssignedTo"].displayName ?? "";
       const imgUrl = `${config.previewimage}?raw=true`;
       const previewTitle = ` ${obj.fields["System.State"]} | ${displayName}`;
-      const preview = CardFactory.thumbnailCard(
-        obj.fields["System.Title"],
-        [{ url: imgUrl }],
-        [{
-          type: 'openUrl',
-          title: 'View workitem',
-          value: `${config.wiUrl}/edit/${obj.id}/`
-        }],
-        {
-          text: `${previewTitle}`,
-        }
-      );
-      preview.content.tap = {
-        type: "invoke",
-        value: {
-          status: obj.fields["System.State"], id: obj.id, url: `${config.wiUrl}/edit/${obj.id}/`, title: obj.fields["System.Title"], projectName: obj.fields["System.TeamProject"]
-        },
-      };
-      const data = { title: obj.fields["System.Title"], displayName: displayName, status: obj.fields["System.State"] }
+      const preview = CardFactory.heroCard(previewTitle);
+ 
+      const data = { status: obj.fields["System.State"], id: obj.id, url: `${config.wiUrl}/edit/${obj.id}/`, title: obj.fields["System.Title"], projectName: config.projectName }
       const template = new ACData.Template(templateJson);
       const card = template.expand({
         $root: data
@@ -57,21 +41,21 @@ class TeamsBot extends TeamsActivityHandler {
     };
   }
 
-  async handleTeamsMessagingExtensionSelectItem(context, obj) {
-    const templateJson = require('./cards/taskCard.js')
-    const template = new ACData.Template(templateJson);
-    const card = template.expand({
-      $root: obj
-    });
-    const resultCard = CardFactory.adaptiveCard(card);
-    return {
-      composeExtension: {
-        type: "result",
-        attachmentLayout: "list",
-        attachments: [resultCard]
-      },
-    };
-  }
+  // async handleTeamsMessagingExtensionSelectItem(context, obj) {
+  //   const templateJson = require('./cards/taskCard.js')
+  //   const template = new ACData.Template(templateJson);
+  //   const card = template.expand({
+  //     $root: obj
+  //   });
+  //   const resultCard = CardFactory.adaptiveCard(card);
+  //   return {
+  //     composeExtension: {
+  //       type: "result",
+  //       attachmentLayout: "list",
+  //       attachments: [resultCard]
+  //     },
+  //   };
+  // }
   //dialog
   async handleTeamsTaskModuleFetch(context, taskModuleRequest) {
     const obj = taskModuleRequest.data.data;
