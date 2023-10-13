@@ -19,8 +19,8 @@
         "full": "AzDevOps Helper"
     },
     "description": {
-        "short": "Find and manage AzDevOps work items",
-        "full": "Manage and find AzDevOps work items"
+        "short": "Create, search, view and edit tasks",
+        "full": "Use AzDevOps Helper to search, edit, summarise your tasks"
     },
     "accentColor": "#FFFFFF",
     "bots": [
@@ -54,14 +54,26 @@
                         "compose",
                         "commandBox"
                     ],
-                    "description": "Search work items in AzDevOps",
+                    "description": "Find through AzDevOps Helper plugin tasks that match your search criteria",
                     "title": "Search",
                     "type": "query",
                     "parameters": [
                         {
-                            "name": "searchQuery",
-                            "title": "Search Query",
-                            "description": "Search work items in AzDevOps",
+                            "name": "title",
+                            "title": "Task title",
+                            "description": "Send task title as keyword",
+                            "inputType": "text"
+                        },
+                        {
+                            "name": "projectName",
+                            "title": "Project name",
+                            "description": "Send project name to which tasks belong to as keyword",
+                            "inputType": "text"
+                        },
+                        {
+                            "name": "state",
+                            "title": "State of the project",
+                            "description": "Send state or status of the task as keyword. Acceptable values are To Do, Doing, Done",
                             "inputType": "text"
                         }
                     ]
@@ -73,8 +85,8 @@
                         "message",
                         "commandBox"
                     ],
-                    "description": "Create work item in AzDevOps",
-                    "title": "Create work item in AzDevOps",
+                    "description": "Create new task",
+                    "title": "Create new task",
                     "type": "action",
                     "fetchTask": true
                 }
